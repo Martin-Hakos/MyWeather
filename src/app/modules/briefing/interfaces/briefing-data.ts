@@ -1,13 +1,13 @@
 export interface IBriefingData {
-  error: IError;
+  error: IError | null;
   id: string;
-  result: string;
+  result: IResult[] | null;
 }
 
 export interface IError {
   code: number;
   data: any | null;
-  message: IResult[];
+  message: string;
 }
 
 export interface IResult {
@@ -23,15 +23,6 @@ export interface IResult {
   textHTML: string;
 }
 
-export interface IRequestQuery {
-  id: string;
-  method: string;
-  params: [
-    {
-      id: string;
-      reportTypes: string[];
-      stations: string[];
-      countries: string[];
-    }
-  ];
+export interface IGroupedResult {
+  [stationId: string]: IResult[];
 }

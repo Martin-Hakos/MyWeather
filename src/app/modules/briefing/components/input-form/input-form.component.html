@@ -1,6 +1,6 @@
 <div class="briefing-input-form-container">
   <mat-card appearance="outlined" class="briefing-input-form-content">
-    <h3>Select Flight Weather Briefing Criteria:</h3>
+    <h3>Select Weather Briefing Criteria:</h3>
     <form [formGroup]="briefingForm">
       <mat-checkbox formControlName="metar">METAR</mat-checkbox>
       <mat-checkbox formControlName="sigmet">SIGMET</mat-checkbox>
@@ -31,7 +31,7 @@
           class="briefing-button"
           [disabled]="!briefingForm.valid"
           [class.disabled]="!briefingForm.valid"
-          (click)="getBriefingData()"
+          (click)="loadBriefingData()"
         >
           Create Briefing
         </button>

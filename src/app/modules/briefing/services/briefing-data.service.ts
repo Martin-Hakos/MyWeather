@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IRequestQuery } from '../interfaces/briefing-data';
+import { IBriefingData } from '../interfaces/briefing-data';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class BriefingDataService {
     reportTypes: string[],
     airports: string[],
     countries: string[]
-  ): Observable<IRequestQuery> {
+  ): Observable<IBriefingData> {
     const body = {
       id: 'query01',
       method: 'query',
@@ -28,6 +28,6 @@ export class BriefingDataService {
         },
       ],
     };
-    return this.http.post<IRequestQuery>(`${this.api_url}`, body);
+    return this.http.post<IBriefingData>(`${this.api_url}`, body);
   }
 }

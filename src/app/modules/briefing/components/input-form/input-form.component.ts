@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { BriefingDataService } from '../../services/briefing-data.service';
+import { IBriefingData, IGroupedResult } from '../../interfaces/briefing-data';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../../../../store/types/appState.interface';
+import * as briefingActions from './../../../../store/actions/briefing.actions';
 
 @Component({
   selector: 'app-input-form',
   templateUrl: './input-form.component.html',
-  styleUrls: ['./input-form.component.scss'], // Corrected styleUrl to styleUrls
+  styleUrls: ['./input-form.component.scss'],
 })
 export class InputFormComponent implements OnInit {
   briefingForm!: FormGroup;
@@ -21,9 +24,11 @@ export class InputFormComponent implements OnInit {
   selectedCountries: string[] = [];
   selectedReportTypes: string[] = [];
 
+  briefingData!: IBriefingData;
+
   constructor(
     private formBuilder: FormBuilder,
-    private briefing_data_service: BriefingDataService
+    private store: Store<IAppState>
   ) {
     this.reportTypes = ['metar', 'sigmet', 'taf'];
   }
@@ -70,7 +75,7 @@ export class InputFormComponent implements OnInit {
     });
   }
 
-  getBriefingData() {
+  loadBriefingData() {
     if (this.briefingForm.get('airports')!.value[0] !== undefined) {
       this.selectedAirports = this.briefingForm
         .get('airports')!
@@ -90,14 +95,12 @@ export class InputFormComponent implements OnInit {
       value.toUpperCase()
     );
 
-    this.briefing_data_service
-      .getBriefingData(
-        this.selectedReportTypes,
-        this.selectedAirports,
-        this.selectedCountries
-      )
-      .subscribe((response) => {
-        console.log(response);
-      });
+    this.store.dispatch(
+      briefingActions.loadBriefingData({
+        reportTypes: this.selectedReportTypes,
+        airports: this.selectedAirports,
+        countries: this.selectedCountries,
+      })
+    );
   }
 }
