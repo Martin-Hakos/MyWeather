@@ -47,6 +47,7 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
     this.briefingDataSub = this.briefingData$.subscribe((data) => {
       if (data) {
         this.groupedBriefingData = this.groupByStationId(data);
+        console.log(this.groupedBriefingData);
       }
     });
   }

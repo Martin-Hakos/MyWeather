@@ -4,15 +4,6 @@
   margin-bottom: 2rem;
 }
 
-.table-header {
-  padding: 1rem;
-  margin: 0;
-  border-bottom: 1px solid #e0e0e0;
-  text-align: left;
-  font-size: 1.6rem;
-  font-weight: lighter;
-}
-
 .briefing-table-container {
   margin: 0 1.5rem;
   border: 1px solid #e0e0e0;
@@ -32,6 +23,7 @@
     padding: 8px 16px;
     text-align: left;
     height: 50px;
+    width: 25%;
     box-sizing: border-box;
   }
 

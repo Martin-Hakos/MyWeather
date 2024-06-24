@@ -4,30 +4,23 @@
 </div>
 } @if(briefingData$ | async){
 <div class="briefing-table-container">
-  <h2 class="table-header">Weather Forecast Briefing</h2>
   @for(stationId of getStationIds(); track stationId){
-  <h3 class="briefing-station-id">Station ID: {{ stationId }}</h3>
+  <h3 class="briefing-station-id">{{ stationId }}</h3>
   <table class="briefing-table">
     <thead>
       <tr>
-        <th>Place ID</th>
-        <th>Query Type</th>
+        <th>Report Type</th>
         <th>Reception Time</th>
         <th>Report Time</th>
-        <th>Report Type</th>
-        <th>Revision</th>
-        <th>Text</th>
+        <th>Details</th>
       </tr>
     </thead>
     <tbody>
       @for(result of groupedBriefingData[stationId]; track result){
-      <tr *ngFor="let result of groupedBriefingData[stationId]">
-        <td>{{ result.placeId }}</td>
+      <tr>
         <td>{{ result.queryType }}</td>
         <td>{{ result.receptionTime | date : "short" }}</td>
         <td>{{ result.reportTime | date : "short" }}</td>
-        <td>{{ result.reportType }}</td>
-        <td>{{ result.revision }}</td>
         <td [innerHTML]="result.text | highlight"></td>
       </tr>
       }
