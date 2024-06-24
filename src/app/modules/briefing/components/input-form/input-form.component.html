@@ -1,0 +1,41 @@
+<div class="briefing-input-form-container">
+  <mat-card appearance="outlined" class="briefing-input-form-content">
+    <h3>Select Flight Weather Briefing Criteria:</h3>
+    <form [formGroup]="briefingForm">
+      <mat-checkbox formControlName="metar">METAR</mat-checkbox>
+      <mat-checkbox formControlName="sigmet">SIGMET</mat-checkbox>
+      <mat-checkbox formControlName="taf">TAF</mat-checkbox>
+
+      <div class="briefing-input-fields">
+        <mat-form-field>
+          <mat-label>Airports:</mat-label>
+          <input
+            matInput
+            placeholder="Type Airport Code"
+            formControlName="airports"
+            (keyup)="formatValue($event, 4, 'airports')"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Countries:</mat-label>
+          <input
+            matInput
+            placeholder="Type Country Code"
+            formControlName="countries"
+            (keyup)="formatValue($event, 2, 'countries')"
+          />
+        </mat-form-field>
+      </div>
+      <div class="briefing-button-container">
+        <button
+          class="briefing-button"
+          [disabled]="!briefingForm.valid"
+          [class.disabled]="!briefingForm.valid"
+          (click)="getBriefingData()"
+        >
+          Create Briefing
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

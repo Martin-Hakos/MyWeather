@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+// Angular Material styles
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+    ),
+  )
+);
+
+html {
+  // Apply the base theme at the root, so it will be inherited by the whole app.
+  @include mat.all-component-themes($theme);
+}
+
+//General styles
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}

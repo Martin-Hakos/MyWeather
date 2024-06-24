@@ -1,6 +1,6 @@
 # MyWeather
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8. and updated to version 18.0.4
 
 ## Development server
 
