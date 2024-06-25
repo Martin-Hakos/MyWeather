@@ -28,10 +28,16 @@
   </table>
   }
 </div>
-} } @if(errorMessage){
+} @else{
 <div class="error-message-container">
   <mat-card appearance="outlined">
     {{ errorData?.message }}
+  </mat-card>
+</div>
+} } @if(noDataFound){
+<div class="error-message-container">
+  <mat-card appearance="outlined">
+    No Data found based on your search criteria, please modify your search.
   </mat-card>
 </div>
 }

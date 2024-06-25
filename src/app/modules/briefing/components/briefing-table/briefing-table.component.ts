@@ -24,10 +24,11 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
   briefingData$: Observable<IBriefingData | null>;
   error$: Observable<string | null>;
 
-  briefingData!: IBriefingData;
+  briefingData: IBriefingData | null = null;
   groupedBriefingData!: IGroupedResult;
-  errorMessage: boolean | null = null;
+  errorMessage: boolean = false;
   errorData: IError | null = null;
+  noDataFound: boolean = false;
 
   public isLoadingSub: Subscription = new Subscription();
   public briefingDataSub: Subscription = new Subscription();
@@ -51,7 +52,8 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
 
   getBriefingData() {
     this.briefingDataSub = this.briefingData$.subscribe((data) => {
-      this.errorMessage = null;
+      this.errorMessage = false;
+      this.noDataFound = false;
       this.errorData = null;
       this.groupedBriefingData = {};
 
@@ -60,9 +62,13 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
           this.errorData = data.error;
           this.errorMessage = true;
         } else if (data.result) {
-          this.errorMessage = false;
-          this.groupedBriefingData = this.groupByStationId(data.result);
-          console.log(this.groupedBriefingData);
+          if (data.result.length === 0) {
+            this.noDataFound = true;
+          } else {
+            this.errorMessage = false;
+            this.groupedBriefingData = this.groupByStationId(data.result);
+            console.log(this.groupedBriefingData);
+          }
         }
       }
     });

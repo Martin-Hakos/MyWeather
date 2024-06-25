@@ -28,6 +28,7 @@ export class BriefingDataService {
         },
       ],
     };
+    console.log(body);
     return this.http.post<IBriefingData>(`${this.api_url}`, body);
   }
 }
