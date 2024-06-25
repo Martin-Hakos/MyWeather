@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IBriefingData, IGroupedResult } from '../../interfaces/briefing-data';
+import {
+  IBriefingData,
+  IError,
+  IGroupedResult,
+  IResult,
+} from '../../interfaces/briefing-data';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { IAppState } from '../../../../store/types/appState.interface';
@@ -21,6 +26,8 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
 
   briefingData!: IBriefingData;
   groupedBriefingData!: IGroupedResult;
+  errorMessage: boolean | null = null;
+  errorData: IError | null = null;
 
   public isLoadingSub: Subscription = new Subscription();
   public briefingDataSub: Subscription = new Subscription();
@@ -34,7 +41,6 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getBriefingData();
-    this.getErrorState();
   }
 
   ngOnDestroy(): void {
@@ -45,24 +51,28 @@ export class BriefingTableComponent implements OnInit, OnDestroy {
 
   getBriefingData() {
     this.briefingDataSub = this.briefingData$.subscribe((data) => {
+      this.errorMessage = null;
+      this.errorData = null;
+      this.groupedBriefingData = {};
+
       if (data) {
-        this.groupedBriefingData = this.groupByStationId(data);
-        console.log(this.groupedBriefingData);
+        if (data.error) {
+          this.errorData = data.error;
+          this.errorMessage = true;
+        } else if (data.result) {
+          this.errorMessage = false;
+          this.groupedBriefingData = this.groupByStationId(data.result);
+          console.log(this.groupedBriefingData);
+        }
       }
     });
   }
 
-  getErrorState() {
-    this.error$.subscribe((err) => {
-      console.log(err);
-    });
-  }
-
-  groupByStationId(data: IBriefingData): IGroupedResult {
+  groupByStationId(data: IResult[]): IGroupedResult {
     const groupedResult: IGroupedResult = {};
 
-    if (data.result) {
-      data.result.forEach((item) => {
+    if (data) {
+      data.forEach((item) => {
         const stationId = item.stationId;
         if (!groupedResult[stationId]) {
           groupedResult[stationId] = [];

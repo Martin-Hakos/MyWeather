@@ -1,7 +1,7 @@
 export interface IBriefingData {
-  error: IError | null;
+  error: IError;
   id: string;
-  result: IResult[] | null;
+  result: IResult[];
 }
 
 export interface IError {

@@ -2,7 +2,7 @@
 <div class="progress-spinner">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
-} @if(briefingData$ | async){
+} @if(briefingData$ | async){ @if(!errorMessage){
 <div class="briefing-table-container">
   @for(stationId of getStationIds(); track stationId){
   <h3 class="briefing-station-id">{{ stationId }}</h3>
@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      @for(result of groupedBriefingData[stationId]; track result){
+      @for(result of groupedBriefingData[stationId]; track result.queryType){
       <tr>
         <td>{{ result.queryType }}</td>
         <td>{{ result.receptionTime | date : "short" }}</td>
@@ -27,5 +27,11 @@
     </tbody>
   </table>
   }
+</div>
+} } @if(errorMessage){
+<div class="error-message-container">
+  <mat-card appearance="outlined">
+    {{ errorData?.message }}
+  </mat-card>
 </div>
 }
